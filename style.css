@@ -1,0 +1,361 @@
+/* Definições Globais e Variáveis */
+:root {
+    --cor-primaria: #007bff; 
+    --cor-sidebar: #222e4d; 
+    --cor-fundo: #f4f4f9; 
+    --cor-texto-claro: #ffffff;
+    --cor-texto-escuro: #333;
+    /* Cor para o texto em destaque na sidebar (Ciano Claro) */
+    --cor-texto-destaque: #70e9ff; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--cor-fundo);
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    /* Impede a barra de rolagem horizontal geral */
+    overflow-x: hidden; 
+}
+
+/* 1. ESTRUTURA PRINCIPAL E LAYOUT DE DUAS COLUNAS */
+#curriculo {
+    display: grid;
+    grid-template-columns: 1fr 3fr; 
+    max-width: 1200px; 
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    /* Voltamos para o hidden para manter o layout limpo, confiando no fixed */
+    overflow: hidden; 
+    position: relative; 
+}
+
+/* ESTILO PARA OFUSCAR O FUNDO (Adicionado pelo JavaScript) */
+.dim-bg .conteudo-principal {
+    filter: brightness(0.6); /* Escurece o conteúdo principal */
+    transition: filter 0.3s ease;
+}
+.conteudo-principal {
+    transition: filter 0.3s ease; 
+}
+
+.dim-bg .sidebar {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Adiciona sombra forte para focar */
+    z-index: 10; 
+}
+
+
+/* 2. ESTILIZAÇÃO DA COLUNA ESQUERDA (SIDEBAR) */
+.sidebar {
+    background-color: var(--cor-sidebar);
+    color: var(--cor-texto-claro);
+    padding: 30px 20px;
+    z-index: 5; 
+    
+    /* Permite rolagem vertical e visibilidade horizontal */
+    overflow-y: auto; 
+    overflow-x: visible; 
+    
+    position: relative; 
+}
+
+.sidebar h2 {
+    color: var(--cor-primaria);
+    border-bottom: 2px solid var(--cor-primaria);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.sidebar section {
+    margin-bottom: 30px; 
+}
+
+/* DESTAQUE DO TEXTO GERAL NA SIDEBAR */
+.sidebar ul li, .sidebar p, .sidebar a {
+    color: var(--cor-texto-destaque); 
+    font-weight: 500; 
+    font-size: 1.05em; 
+    line-height: 1.6; 
+}
+
+/* LAYOUT DO PERFIL - ESTADO NORMAL (IMAGEM E TEXTO ESCONDIDO) */
+.perfil-info-wrapper {
+    display: flex; 
+    /* Centraliza o conteúdo da foto na sidebar */
+    justify-content: center; 
+    align-items: center;
+    gap: 15px; 
+    margin-bottom: 30px;
+    margin-top: 40px; /* Espaço extra acima da imagem */
+    cursor: pointer;
+    transition: transform 0.3s ease-out, gap 0.3s ease-out; 
+    flex-wrap: nowrap;
+}
+
+/* Contêiner da Foto: CÍRCULO PERFEITO - ESTADO NORMAL */
+.foto-container {
+    position: relative;
+    width: 180px; /* TAMANHO BASE: 180px */
+    height: 180px; /* TAMANHO BASE: 180px */
+    border-radius: 50%; 
+    overflow: hidden; 
+    border: 5px solid var(--cor-primaria); 
+    flex-shrink: 0; 
+    
+    /* Transição suave para o movimento */
+    transition: transform 0.5s ease-out;
+}
+
+.foto-perfil {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; 
+    object-fit: cover; 
+    display: block;
+}
+
+/* Estilo do Texto Lateral - AGORA ABSOLUTO E COM LARGURA DEFINIDA */
+.perfil-hover-text {
+    min-width: 320px;
+    max-width: 600px;
+    width: auto;
+    position: absolute; 
+    z-index: 20; 
+    
+    color: var(--cor-texto-destaque); 
+    
+    /* DESTAQUE FORTE DO HOVER */
+    font-size: 1.0em; 
+    font-weight: 700; 
+    
+    line-height: 1.4;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    white-space: normal;
+    
+    /* Posição e Opacidade Inicial (Escondido) */
+    opacity: 0; 
+    left: 100px; 
+    
+    /* Transição suave para opacidade e posição (left) */
+    transition: opacity 0.5s ease, left 0.5s ease, position 0s; 
+}
+
+/* ---------------------------------------------------------------------- */
+/* ESTADO DE HOVER: QUANDO O MOUSE PASSA POR CIMA DO PERFIL-INFO-WRAPPER */
+/* ---------------------------------------------------------------------- */
+.perfil-info-wrapper:hover {
+    transform: scale(1.05); 
+    gap: 20px; 
+}
+
+/* A foto só aplica o ZOOM e MANTÉM a centralização */
+.perfil-info-wrapper:hover .foto-container {
+    transform: scale(1.3); 
+}
+
+/* CORREÇÃO FINAL: O texto flutua com POSITION: FIXED e é centralizado sobre o MAIN */
+.perfil-info-wrapper:hover .perfil-hover-text {
+    opacity: 1; /* Torna-se visível */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s ease, transform 0.5s ease, position 0s;
+}
+
+
+.links-sociais {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 20px; /* Espaço extra acima dos links */
+}
+
+/* 3. ESTILIZAÇÃO DA COLUNA DIREITA (CONTEÚDO PRINCIPAL) */
+.conteudo-principal {
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-texto-escuro);
+    padding: 30px 40px;
+}
+
+.cabecalho h1 {
+    font-size: 2.5em;
+    color: var(--cor-sidebar);
+}
+
+.cabecalho .cargo {
+    font-size: 1.2em;
+    color: var(--cor-primaria);
+    margin-top: 5px;
+}
+
+.cabecalho hr {
+    border: 0;
+    height: 3px;
+    background-color: var(--cor-primaria);
+    margin: 15px 0 30px 0;
+}
+
+.secao h2 {
+    color: var(--cor-sidebar);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* 4. ESTILO DA SEÇÃO FORMAÇÃO (e Experiência para a barra vertical) */
+.formacao-item, .experiencia-item {
+    margin-bottom: 30px;
+    padding-left: 15px;
+    border-left: 4px solid var(--cor-primaria); 
+}
+
+
+/* 5. ESTILO DA INTERATIVIDADE DE CLIQUE (Toggles) */
+
+/* Aplica o estilo a TODOS os cabeçalhos que queremos que sejam clicáveis */
+.experiencia-item h3, .formacao-item h3 {
+    cursor: pointer; 
+    color: var(--cor-sidebar);
+    font-size: 1.3em;
+    margin-bottom: 5px;
+    display: inline-block; 
+    position: relative;
+    padding-right: 25px; 
+    transition: color 0.3s;
+}
+
+/* Efeito de hover no texto clicável */
+.experiencia-item h3:hover, .formacao-item h3:hover {
+    color: var(--cor-primaria); 
+}
+
+/* Estilo do Ícone (a seta para baixo) */
+.experiencia-item h3::after, .formacao-item h3::after {
+    content: ' \25BC'; 
+    font-size: 0.7em;
+    color: var(--cor-primaria);
+    transition: transform 0.3s ease;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg); 
+}
+
+/* CLASSE PARA GIRAR O ÍCONE (Adicionada pelo JavaScript) */
+.active-toggle::after {
+    transform: translateY(-50%) rotate(180deg) !important; 
+}
+
+.empresa-periodo, .instituicao-periodo {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.descricao {
+    line-height: 1.5;
+    font-size: 0.95em;
+    color: var(--cor-texto-escuro);
+}
+
+.detalhes-funcao {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 0;
+    line-height: 1.6;
+}
+
+/* CLASSE CRÍTICA: USADA PELO JAVASCRIPT para esconder o conteúdo */
+.hidden {
+    display: none;
+}
+
+/* 6. ESTILO PARA AS HABILIDADES TÉCNICAS (BARRAS DE PROGRESSO) */
+.habilidade-item {
+    margin-bottom: 20px;
+}
+.barra-habilidade {
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 10px;
+}
+
+.progresso {
+    background-color: var(--cor-primaria);
+    height: 100%;
+    transition: width 1s ease-out; /* Transição da animação da barra */
+}
+
+/* 7. LAYOUT RESPONSIVO */
+@media (max-width: 768px) {
+    #curriculo {
+        grid-template-columns: 1fr; 
+    }
+    
+    .perfil-info-wrapper {
+        flex-direction: column; /* Empilha a foto e o texto no mobile */
+        height: auto;
+    }
+    
+    .foto-container {
+        margin: 0 auto;
+        transform: translateX(0); /* Remove o transform no mobile */
+    }
+    
+    /* Remove a escala no mobile para evitar problemas de layout */
+    .perfil-info-wrapper:hover {
+        transform: scale(1.0); 
+    }
+    
+    /* No mobile, o texto aparece por padrão abaixo da foto */
+    .perfil-hover-text {
+        opacity: 1; /* Visível */
+        text-align: center;
+        margin-top: 10px;
+        max-width: 100%;
+        flex-grow: 1; /* Ocupa espaço */
+        white-space: normal; /* Permite quebra de linha */
+    }
+
+    .sidebar, .conteudo-principal {
+        padding: 20px;
+    }
+}
+
+/* Sobreposição do texto na seção de formação */
+.formacao-overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(34, 46, 77, 0.95);
+    color: var(--cor-texto-destaque);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    z-index: 100;
+    min-width: 320px;
+    max-width: 600px;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+}
+
+.formacao-overlay-text.hidden {
+    display: none;
+}
