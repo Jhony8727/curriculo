@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    // Alternância de modo escuro
+    const btnDarkMode = document.getElementById('btn-dark-mode');
+    btnDarkMode.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        btnDarkMode.innerHTML = document.body.classList.contains('dark-mode') ? '☀️ Modo Dia' : '🌙 Modo Noite';
+    });
+
     // 1. LÓGICA DE MOSTRAR/ESCONDER CONTEÚDO (Experiência e Formação) - REATIVADO!
     const toggleButtons = document.querySelectorAll('.js-toggle-details');
 
@@ -61,16 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-        });// Seleciona os elementos
+        // Seleciona os elementos
             const perfilWrapper = document.querySelector('.perfil-info-wrapper');
             const formacaoOverlayText = document.getElementById('formacao-overlay-text');
-
+        
         // Mostra o texto ao passar o mouse
-                perfilWrapper.addEventListener('mouseenter', () => {
+            perfilWrapper.addEventListener('mouseenter', () => {
                 formacaoOverlayText.classList.remove('hidden');
-        });
-
+            });
+        
         // Esconde o texto ao tirar o mouse
-                perfilWrapper.addEventListener('mouseleave', () => {
+            perfilWrapper.addEventListener('mouseleave', () => {
                 formacaoOverlayText.classList.add('hidden');
+            });
         });
