@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleButtons = document.querySelectorAll('.js-toggle-details');
 
     toggleButtons.forEach(button => {
-        
         // Encontra o elemento de detalhes (ul ou p.descricao)
         const detailsList = button.parentElement.querySelector('.detalhes-funcao');
 
@@ -12,12 +11,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (detailsList) {
             detailsList.classList.add('hidden');
         }
-        
+
         button.addEventListener('click', () => {
             if (detailsList) {
+                // Fecha todos os outros detalhes abertos
+                toggleButtons.forEach(otherBtn => {
+                    if (otherBtn !== button) {
+                        const otherDetails = otherBtn.parentElement.querySelector('.detalhes-funcao');
+                        if (otherDetails && !otherDetails.classList.contains('hidden')) {
+                            otherDetails.classList.add('hidden');
+                            otherBtn.classList.remove('active-toggle');
+                        }
+                    }
+                });
                 // Alterna a classe 'hidden' nos detalhes (esconde/mostra)
                 detailsList.classList.toggle('hidden');
-
                 // Alterna a classe 'active-toggle' no H3 para girar a seta
                 button.classList.toggle('active-toggle');
             }

@@ -420,7 +420,7 @@ body {
 
 /* Sobreposição do texto na seção de formação */
 .formacao-overlay-text {
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
